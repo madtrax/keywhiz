@@ -15,20 +15,29 @@
  */
 package keywhiz;
 
+import java.io.File;
+import java.io.IOException;
+
+import javax.validation.Validation;
+import javax.validation.Validator;
+
+import org.jooq.DSLContext;
+import org.jooq.exception.DataAccessException;
+import org.junit.runners.BlockJUnit4ClassRunner;
+import org.junit.runners.model.InitializationError;
+import org.mockito.MockitoAnnotations;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Throwables;
 import com.google.common.io.Resources;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
+
 import io.dropwizard.configuration.ConfigurationException;
-import io.dropwizard.configuration.ConfigurationFactory;
-import io.dropwizard.logging.LoggingFactory;
+import io.dropwizard.configuration.YamlConfigurationFactory;
+import io.dropwizard.logging.BootstrapLogging;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
-import java.io.File;
-import java.io.IOException;
-import javax.validation.Validation;
-import javax.validation.Validator;
 import keywhiz.jooq.tables.Accessgrants;
 import keywhiz.jooq.tables.Clients;
 import keywhiz.jooq.tables.Groups;
@@ -36,17 +45,12 @@ import keywhiz.jooq.tables.Memberships;
 import keywhiz.jooq.tables.Secrets;
 import keywhiz.jooq.tables.SecretsContent;
 import keywhiz.jooq.tables.Users;
-import org.jooq.DSLContext;
-import org.jooq.exception.DataAccessException;
-import org.junit.runners.BlockJUnit4ClassRunner;
-import org.junit.runners.model.InitializationError;
-import org.mockito.MockitoAnnotations;
 
 /** Injecting test runner. */
 public class KeywhizTestRunner extends BlockJUnit4ClassRunner {
   public KeywhizTestRunner(Class<?> klass) throws InitializationError {
     super(klass);
-    LoggingFactory.bootstrap();
+    BootstrapLogging.bootstrap();
   }
 
   private static final Injector injector = createInjector();
@@ -61,7 +65,7 @@ public class KeywhizTestRunner extends BlockJUnit4ClassRunner {
     ObjectMapper objectMapper = bootstrap.getObjectMapper().copy();
     KeywhizConfig config;
     try {
-      config = new ConfigurationFactory<>(KeywhizConfig.class, validator, objectMapper, "dw")
+      config = new YamlConfigurationFactory<>(KeywhizConfig.class, validator, objectMapper, "dw")
           .build(yamlFile);
     } catch (IOException | ConfigurationException e) {
       throw Throwables.propagate(e);

@@ -51,7 +51,7 @@ class GroupMapper implements RecordMapper<GroupsRecord, Group> {
   private ImmutableMap<String, String> tryToReadMapFromMetadata(String value) {
     if (value != null && !value.isEmpty()) {
       try {
-        return ImmutableMap.copyOf(mapper.readValue(value, MAP_STRING_STRING_TYPE));
+        return ImmutableMap.copyOf(mapper.readValue(value, Map.class));
       } catch (IOException e) {
         throw new RuntimeException(
             "Failed to create a Map from data. Bad json in metadata column?", e);

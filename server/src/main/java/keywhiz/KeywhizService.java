@@ -19,12 +19,10 @@ import com.codahale.metrics.MetricRegistry;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.datatype.jdk8.Jdk8Module;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import io.dropwizard.Application;
-import io.dropwizard.java8.Java8Bundle;
 import io.dropwizard.jersey.setup.JerseyEnvironment;
 import io.dropwizard.setup.Bootstrap;
 import io.dropwizard.setup.Environment;
@@ -97,9 +95,6 @@ public class KeywhizService extends Application<KeywhizConfig> {
     bootstrap.addCommand(new DbSeedCommand());
     bootstrap.addCommand(new GenerateAesKeyCommand());
     bootstrap.addCommand(new AddUserCommand());
-
-    logger.debug("Registering bundles");
-    bootstrap.addBundle(new Java8Bundle());
   }
 
   @SuppressWarnings("unchecked")
@@ -175,7 +170,6 @@ public class KeywhizService extends Application<KeywhizConfig> {
    * @return customized input factory
    */
   public static ObjectMapper customizeObjectMapper(ObjectMapper objectMapper) {
-    objectMapper.registerModules(new Jdk8Module());
     objectMapper.registerModules(new JavaTimeModule());
     objectMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);

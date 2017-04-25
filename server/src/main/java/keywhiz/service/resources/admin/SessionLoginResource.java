@@ -21,7 +21,7 @@ import com.codahale.metrics.annotation.ExceptionMetered;
 import com.google.common.collect.ImmutableList;
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.basic.BasicCredentials;
-import io.dropwizard.java8.auth.Authenticator;
+import io.dropwizard.auth.Authenticator;
 import java.net.URI;
 import java.time.ZonedDateTime;
 import java.util.Optional;

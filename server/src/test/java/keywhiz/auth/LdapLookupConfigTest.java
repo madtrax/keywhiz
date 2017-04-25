@@ -16,20 +16,24 @@
 
 package keywhiz.auth;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.io.Resources;
-import io.dropwizard.configuration.ConfigurationFactory;
-import io.dropwizard.setup.Bootstrap;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import java.io.File;
+
 import javax.validation.Validation;
 import javax.validation.Validator;
-import keywhiz.KeywhizConfig;
-import keywhiz.KeywhizService;
-import keywhiz.auth.ldap.LdapLookupConfig;
+
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.io.Resources;
+
+import io.dropwizard.configuration.YamlConfigurationFactory;
+import io.dropwizard.setup.Bootstrap;
+import keywhiz.KeywhizConfig;
+import keywhiz.KeywhizService;
+import keywhiz.auth.ldap.LdapLookupConfig;
 
 public class LdapLookupConfigTest {
 
@@ -47,7 +51,7 @@ public class LdapLookupConfigTest {
     ObjectMapper objectMapper = bootstrap.getObjectMapper().copy();
 
     LdapLookupConfig lookupConfig =
-        new ConfigurationFactory<>(LdapLookupConfig.class, validator, objectMapper, "dw")
+        new YamlConfigurationFactory<>(LdapLookupConfig.class, validator, objectMapper, "dw")
             .build(yamlFile);
 
     assertThat(lookupConfig.getRequiredRoles()).containsOnly("keywhizAdmins");

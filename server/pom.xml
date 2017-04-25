@@ -138,13 +138,9 @@
       <artifactId>dropwizard-views-mustache</artifactId>
     </dependency>
     <dependency>
-      <groupId>io.dropwizard.modules</groupId>
-      <artifactId>dropwizard-java8</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.dropwizard.modules</groupId>
-      <artifactId>dropwizard-java8-auth</artifactId>
-    </dependency>
+      <groupId>io.dropwizard</groupId>
+      <artifactId>dropwizard-auth</artifactId>
+    </dependency>    
     <dependency>
       <groupId>com.tradier</groupId>
       <artifactId>dropwizard-raven</artifactId>

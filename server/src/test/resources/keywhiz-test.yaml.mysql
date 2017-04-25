@@ -33,6 +33,7 @@ server:
         - TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA
         - TLS_ECDH_RSA_WITH_AES_128_CBC_SHA
         - TLS_DHE_RSA_WITH_AES_128_CBC_SHA
+      excludedCipherSuites: []
   adminConnectors:
     - type: http
       bindHost: localhost
@@ -46,7 +47,7 @@ environment: testing
 
 database:
   driverClass: com.mysql.jdbc.Driver
-  url: jdbc:mysql://localhost/keywhizdb_test?useUnicode=true&characterEncoding=utf8
+  url: jdbc:mysql://localhost/keywhizdb_test?useUnicode=true&characterEncoding=utf8&useSSL=false
   user: root
   properties:
     charSet: UTF-8
@@ -58,7 +59,7 @@ database:
 
 readonlyDatabase:
   driverClass: com.mysql.jdbc.Driver
-  url: jdbc:mysql://localhost/keywhizdb_test?useUnicode=true&characterEncoding=utf8
+  url: jdbc:mysql://localhost/keywhizdb_test?useUnicode=true&characterEncoding=utf8&useSSL=false
   user: root
   properties:
     charSet: UTF-8

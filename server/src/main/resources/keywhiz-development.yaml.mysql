@@ -44,6 +44,7 @@ server:
         - TLS_ECDH_ECDSA_WITH_AES_128_CBC_SHA
         - TLS_ECDH_RSA_WITH_AES_128_CBC_SHA
         - TLS_DHE_RSA_WITH_AES_128_CBC_SHA
+      excludedCipherSuites: []
   adminConnectors:
     - type: http
       bindHost: localhost

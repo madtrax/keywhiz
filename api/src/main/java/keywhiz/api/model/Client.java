@@ -25,8 +25,10 @@ import keywhiz.api.ApiDate;
 import static com.google.common.base.Preconditions.checkNotNull;
 import static com.google.common.base.Strings.nullToEmpty;
 
+import java.security.Principal;
+
 /** Clients table entry for a client-cert authenticated client. */
-public class Client {
+public class Client implements Principal {
   @JsonProperty
   private final long id;
 

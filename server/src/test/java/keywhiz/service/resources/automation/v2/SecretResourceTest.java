@@ -349,7 +349,7 @@ public class SecretResourceTest {
     for (SanitizedSecret s : secrets) {
       if (s.name().equals("secret16")) {
         found = true;
-        assertThat(s.description().equals("test secret 16"));
+        assertThat(s.description().equals("test secret 16")).isTrue();
       }
     }
     assertThat(found).isTrue();
@@ -654,13 +654,13 @@ public class SecretResourceTest {
 
     // Get the current version (the last version created)
     initialCurrentVersion = lookup(name);
-    assertThat(initialCurrentVersion.name().equals(name));
+    assertThat(initialCurrentVersion.name()).isEqualTo(name);
     assertThat(
-        initialCurrentVersion.description().equals(format("%s, version %d", name, totalVersions)));
+        initialCurrentVersion.description()).isEqualTo(format("%s, version %d", name, totalVersions));
 
     // Get the earliest version of this secret
     versions = listVersions(name, totalVersions - 2, 1);
-    assertThat(!versions.get(0).equals(initialCurrentVersion));
+    assertThat(versions.get(0)).isNotEqualTo(initialCurrentVersion);
 
     // Reset the current version to this version
     setCurrentVersion(
@@ -668,8 +668,8 @@ public class SecretResourceTest {
 
     // Get the current version
     finalCurrentVersion = lookup(name);
-    assertThat(finalCurrentVersion.equals(versions.get(0)));
-    assertThat(!finalCurrentVersion.equals(initialCurrentVersion));
+    assertThat(finalCurrentVersion).isEqualTo(versions.get(0));
+    assertThat(finalCurrentVersion).isNotEqualTo(initialCurrentVersion);
   }
 
   @Test public void secretChangeVersion_invalidVersion() throws Exception {
@@ -696,9 +696,8 @@ public class SecretResourceTest {
 
     // Get the current version (the last version created)
     initialCurrentVersion = lookup(name);
-    assertThat(initialCurrentVersion.name().equals(name));
-    assertThat(
-        initialCurrentVersion.description().equals(format("%s, version %d", name, totalVersions)));
+    assertThat(initialCurrentVersion.name()).isEqualTo(name);
+    assertThat(initialCurrentVersion.description()).isEqualTo(format("%s, version %d", name, totalVersions));
 
     // Get an invalid version of this secret
     versions = listVersions(name, 0, totalVersions);
@@ -716,7 +715,7 @@ public class SecretResourceTest {
 
       // Get the current version, which should not have changed
       finalCurrentVersion = lookup(name);
-      assertThat(finalCurrentVersion.equals(initialCurrentVersion));
+      assertThat(finalCurrentVersion.equals(initialCurrentVersion)).isTrue();
     }
   }
 
@@ -741,7 +740,7 @@ public class SecretResourceTest {
 
     for (SecretDetailResponseV2 version : versions) {
       // Check creation ordering
-      assertThat(version.createdAtSeconds() < creationTime);
+      assertThat(version.createdAtSeconds() < creationTime).isTrue();
       creationTime = version.createdAtSeconds();
 
       // Check version number

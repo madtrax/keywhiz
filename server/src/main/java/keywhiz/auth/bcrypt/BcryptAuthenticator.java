@@ -18,7 +18,7 @@ package keywhiz.auth.bcrypt;
 
 import io.dropwizard.auth.AuthenticationException;
 import io.dropwizard.auth.basic.BasicCredentials;
-import io.dropwizard.java8.auth.Authenticator;
+import io.dropwizard.auth.Authenticator;
 import java.util.Optional;
 import keywhiz.auth.User;
 import keywhiz.service.daos.UserDAO;
