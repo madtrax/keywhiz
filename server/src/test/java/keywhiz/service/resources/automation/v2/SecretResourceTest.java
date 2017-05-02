@@ -33,6 +33,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
+
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -656,10 +657,10 @@ public class SecretResourceTest {
     initialCurrentVersion = lookup(name);
     assertThat(initialCurrentVersion.name()).isEqualTo(name);
     assertThat(
-        initialCurrentVersion.description()).isEqualTo(format("%s, version %d", name, totalVersions));
+        initialCurrentVersion.description()).isEqualTo(format("%s, version %d", name, totalVersions - 1));
 
     // Get the earliest version of this secret
-    versions = listVersions(name, totalVersions - 2, 1);
+    versions = listVersions(name, totalVersions - 3, 1);
     assertThat(versions.get(0)).isNotEqualTo(initialCurrentVersion);
 
     // Reset the current version to this version
@@ -668,7 +669,7 @@ public class SecretResourceTest {
 
     // Get the current version
     finalCurrentVersion = lookup(name);
-    assertThat(finalCurrentVersion).isEqualTo(versions.get(0));
+    assertThat(finalCurrentVersion).isEqualToIgnoringGivenFields(versions.get(0), "updatedAtSeconds");
     assertThat(finalCurrentVersion).isNotEqualTo(initialCurrentVersion);
   }
 
@@ -697,7 +698,7 @@ public class SecretResourceTest {
     // Get the current version (the last version created)
     initialCurrentVersion = lookup(name);
     assertThat(initialCurrentVersion.name()).isEqualTo(name);
-    assertThat(initialCurrentVersion.description()).isEqualTo(format("%s, version %d", name, totalVersions));
+    assertThat(initialCurrentVersion.description()).isEqualTo(format("%s, version %d", name, totalVersions - 1));
 
     // Get an invalid version of this secret
     versions = listVersions(name, 0, totalVersions);
@@ -740,7 +741,7 @@ public class SecretResourceTest {
 
     for (SecretDetailResponseV2 version : versions) {
       // Check creation ordering
-      assertThat(version.createdAtSeconds() < creationTime).isTrue();
+      assertThat(version.createdAtSeconds() <= creationTime).isTrue();
       creationTime = version.createdAtSeconds();
 
       // Check version number
