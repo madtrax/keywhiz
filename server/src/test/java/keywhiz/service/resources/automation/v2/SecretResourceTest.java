@@ -13,7 +13,6 @@ import java.util.Base64;
 import java.util.Base64.Encoder;
 import java.util.List;
 import java.util.Optional;
-import java.util.Set;
 import keywhiz.IntegrationTestRule;
 import keywhiz.KeywhizService;
 import keywhiz.TestClients;
@@ -33,7 +32,6 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-
 import org.junit.Before;
 import org.junit.ClassRule;
 import org.junit.Ignore;
@@ -318,7 +316,7 @@ public class SecretResourceTest {
     ModifyGroupsRequestV2 request = ModifyGroupsRequestV2.builder()
         .addGroups("testGroup", "secret12")
         .build();
-    List<String> groups = modifyGroups("secret12", request);
+    modifyGroups("secret12", request);
 
     // Delete works
     assertThat(deleteSeries("secret12").code()).isEqualTo(204);
@@ -350,7 +348,7 @@ public class SecretResourceTest {
     for (SanitizedSecret s : secrets) {
       if (s.name().equals("secret16")) {
         found = true;
-        assertThat(s.description().equals("test secret 16")).isTrue();
+        assertThat(s.description()).isEqualTo("test secret 16");
       }
     }
     assertThat(found).isTrue();
@@ -716,7 +714,7 @@ public class SecretResourceTest {
 
       // Get the current version, which should not have changed
       finalCurrentVersion = lookup(name);
-      assertThat(finalCurrentVersion.equals(initialCurrentVersion)).isTrue();
+      assertThat(finalCurrentVersion).isEqualTo(initialCurrentVersion);
     }
   }
 
@@ -741,7 +739,7 @@ public class SecretResourceTest {
 
     for (SecretDetailResponseV2 version : versions) {
       // Check creation ordering
-      assertThat(version.createdAtSeconds() <= creationTime).isTrue();
+      assertThat(version.createdAtSeconds()).isLessThanOrEqualTo(creationTime);
       creationTime = version.createdAtSeconds();
 
       // Check version number

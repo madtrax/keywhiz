@@ -478,6 +478,7 @@
             <threshold>Default</threshold>
             <xmlOutput>true</xmlOutput>
             <excludeFilterFile>findbugs-exclude.xml</excludeFilterFile>
+            <includeTests>true</includeTests>
           </configuration>
           <executions>
             <execution>
