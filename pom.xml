@@ -38,14 +38,17 @@
 
     <dropwizard.version>1.1.0</dropwizard.version>
     <guice.version>4.1.0</guice.version>
-    <jackson.version>2.8.8</jackson.version>
+    <jackson.version>2.8.7</jackson.version>
     <jooq.version>3.9.2</jooq.version>
     <powermock.version>1.6.2</powermock.version>
-    <slf4j.version>1.7.25</slf4j.version>
+    <slf4j.version>1.7.24</slf4j.version>
     <findbugs.version>3.0.1</findbugs.version>
     <pgjdbc-ng.version>0.6</pgjdbc-ng.version>
     <mysql.version>5.1.41</mysql.version>
-    <logback.version>1.2.3</logback.version>
+    <logback.version>1.2.1</logback.version>
+    <mockito.version>1.10.19</mockito.version>
+    <hibernate.version>5.3.4.Final</hibernate.version>
+    <autovalue.version>1.4.1</autovalue.version>
 
     <custom.build.directory>target</custom.build.directory>
   </properties>
@@ -84,7 +87,7 @@
       <dependency>
         <groupId>com.tradier</groupId>
         <artifactId>dropwizard-raven</artifactId>
-        <version>0.7.1</version>
+        <version>1.1.0</version>
       </dependency>
       <dependency>
         <groupId>com.beust</groupId>
@@ -114,12 +117,12 @@
       <dependency>
         <groupId>com.google.auto.service</groupId>
         <artifactId>auto-service</artifactId>
-        <version>1.0-rc2</version>
+        <version>1.0-rc3</version>
       </dependency>
       <dependency>
         <groupId>com.google.auto.value</groupId>
         <artifactId>auto-value</artifactId>
-        <version>1.1</version>
+        <version>${autovalue.version}</version>
       </dependency>
       <dependency>
         <groupId>com.google.code.findbugs</groupId>
@@ -261,7 +264,7 @@
       <dependency>
         <groupId>org.hibernate</groupId>
         <artifactId>hibernate-validator</artifactId>
-        <version>5.4.1.Final</version>
+        <version>${hibernate.version}</version>
       </dependency>
       <dependency>
         <groupId>org.jooq</groupId>
@@ -286,7 +289,7 @@
       <dependency>
         <groupId>org.mockito</groupId>
         <artifactId>mockito-core</artifactId>
-        <version>1.10.19</version>
+        <version>${mockito.version}</version>
       </dependency>
       <dependency>
         <groupId>org.powermock</groupId>
